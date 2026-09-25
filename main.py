@@ -5,7 +5,9 @@ main.py ei tiedä mitään dokumenttien tallennuksesta - se vain välittää
 käyttäjän kysymykset Claudelle ja Clauden työkalukutsut MCP-clientille.
 """
 import asyncio
+import os
 import re
+import sys
 
 from dotenv import load_dotenv
 from anthropic import Anthropic
@@ -19,7 +21,7 @@ model = "claude-sonnet-5"
 SYSTEM_PROMPT = (
     "Olet avulias assistentti joka auttaa käyttäjää löytämään ja muokkaamaan "
     "yrityksen dokumentteja. Käytä list_documents-työkalua nähdäksesi mitä "
-    "dokumentteja on saatavilla, read_document-työkalua lukeaksesi niiden "
+    "dokumentteja on saatavilla, read_doc_contents-työkalua lukeaksesi niiden "
     "sisällön, ja edit_document-työkalua tehdäksesi muutoksia. Älä koskaan "
     "keksi dokumenttien sisältöä - tarkista se aina työkalujen kautta."
 )
@@ -102,7 +104,14 @@ async def process_query(mcp_client: MCPClient, messages: list, claude_tools: lis
 
 
 async def main():
-    async with MCPClient(command="python", args=["mcp_server.py"]) as mcp_client:
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        sys.exit(
+            "Virhe: ANTHROPIC_API_KEY puuttuu. Luo .env-tiedosto projektin "
+            "juureen (katso .env.example) tai aseta ympäristömuuttuja."
+        )
+
+    server_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "mcp_server.py")
+    async with MCPClient(command=sys.executable, args=[server_path]) as mcp_client:
         mcp_tools = await mcp_client.list_tools()
         claude_tools = mcp_tools_to_claude_format(mcp_tools)
 
