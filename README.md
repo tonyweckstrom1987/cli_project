@@ -1,6 +1,11 @@
 # cli_project
 
-CLI-chatbot joka keskustelee kuvitteellisista yritysdokumenteista Clauden ja oman [MCP](https://modelcontextprotocol.io/)-palvelimen kautta. Harjoitusprojekti, jossa MCP:n kolme rajapintaa (tools, resources, prompts) rakennetaan vaiheittain.
+CLI-chatbot, joka käyttää Claudea ja omaa [MCP](https://modelcontextprotocol.io/)-palvelinta kuvitteellisten yritysdokumenttien selaamiseen ja muokkaamiseen.
+
+[![CI](https://github.com/tonyweckstrom1987/cli_project/actions/workflows/ci.yml/badge.svg)](https://github.com/tonyweckstrom1987/cli_project/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+Harjoitusprojekti, jossa MCP:n kolme rajapintaa (tools, resources, prompts) rakennetaan vaiheittain.
 
 ## Mitä projekti tekee
 
@@ -77,3 +82,7 @@ Testit kattavat:
 - `main.py`: MCP-työkalujen muunnoksen Clauden työkaluformaattiin, `@maininta`-regexin ja `expand_mentions`-funktion (tunnettu/tuntematon dokumentti, ei mainintoja) käyttäen kevyttä testidubia oikean MCP-clientin sijaan.
 
 Sama testisarja ajetaan automaattisesti GitHub Actionsissa jokaisella pushilla ja pull requestilla (`.github/workflows/ci.yml`), Python-versioilla 3.10–3.12.
+
+## Lisenssi
+
+MIT, ks. [LICENSE](LICENSE).
